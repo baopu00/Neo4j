@@ -48,11 +48,12 @@
     删除属性：            match(n{name:"特朗普"}) set n."职位"=NULL return n<br>
     
 3.改<br>
-    改额外标签：<br>
+* 3.1 改节点标签和属性<br>
+    加额外标签：<br>
     match (n) where id(n)=127 set n:"Person" return n<br>
-    改额外属性： <br>
+    加额外属性： <br>
     match (n) where id(n)=128 set n.age = "12" return n<br>
-    设置多个属性：<br>
+    加多个属性：<br>
     match (n) where id(n)=128 set n.age = "12"，n."职位" = "学生" return n<br>
 
 4.查<br>
