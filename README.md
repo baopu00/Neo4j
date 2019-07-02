@@ -72,44 +72,44 @@
  
 * 4.2 集合函数查询<br>
 
-通过id函数，返回节点或关系的ID<br>
-MATCH (:Person { name: 'Oliver Stone' })-[r]->(movie)<br>
-RETURN id(r);<br>
+    通过id函数，返回节点或关系的ID<br>
+    MATCH (:Person { name: 'Oliver Stone' })-[r]->(movie)<br>
+    RETURN id(r);<br>
+  
+    通过type函数，查询关系的类型<br>
+    MATCH (:Person { name: 'Oliver Stone' })-[r]->(movie)<br>
+    RETURN type(r);<br>
 
-通过type函数，查询关系的类型<br>
-MATCH (:Person { name: 'Oliver Stone' })-[r]->(movie)<br>
-RETURN type(r);<br>
+    通过lables函数，查询节点的标签<br>
+    MATCH (:Person { name: 'Oliver Stone' })-[r]->(movie)<br>
+    RETURN lables(movie);<br>
 
-通过lables函数，查询节点的标签<br>
-MATCH (:Person { name: 'Oliver Stone' })-[r]->(movie)<br>
-RETURN lables(movie);<br>
+    通过keys函数，查看节点或关系的属性键<br>
+    MATCH (a)<br>
+    WHERE a.name = 'Alice'<br>
+    RETURN keys(a)<br>
 
-通过keys函数，查看节点或关系的属性键<br>
-MATCH (a)<br>
-WHERE a.name = 'Alice'<br>
-RETURN keys(a)<br>
+    通过properties()函数，查看节点或关系的属性<br>
+    CREATE (p:Person { name: 'Stefan', city: 'Berlin' })<br>
+    RETURN properties(p)<br>
 
-通过properties()函数，查看节点或关系的属性<br>
-CREATE (p:Person { name: 'Stefan', city: 'Berlin' })<br>
-RETURN properties(p)<br>
+    nodes(path)：返回path中节点<br>
+    match p=(a)-->(b)-->(c) where a.name='Alice' and c.name='Eskil' return nodes(p)<br>
 
-nodes(path)：返回path中节点<br>
-match p=(a)-->(b)-->(c) where a.name='Alice' and c.name='Eskil' return nodes(p)<br>
-
-relationships(path)：返回path中的关系<br>
-match p=(a)-->(b)-->(c) where a.name='Alice' and c.name='Eskil' return relationships(p)<br>
+    relationships(path)：返回path中的关系<br>
+    match p=(a)-->(b)-->(c) where a.name='Alice' and c.name='Eskil' return relationships(p)<br>
 
 * 4.3 路径查询：<br>
-常规路径查询：<br>
-match (:"人物"{name:"特朗普"})->(p) return p<br>
+    常规路径查询：<br>
+    match (:"人物"{name:"特朗普"})->(p) return p<br>
 
-可变长路径查询： <br>
-match (:"人物"{name:"特朗普"})->[r*1..4]->(p) return r,p #距离为1到4<br>
- 
-最短路径查询：<br>
-match path = shortestPath( (p1:"人物"{name:"特朗普"})->[r*1..4]->(p2) <br>
-where p2.name="拿破仑"<br>
-return path,length(path)<br>
+    可变长路径查询： <br>
+    match (:"人物"{name:"特朗普"})->[r*1..4]->(p) return r,p #距离为1到4<br>
+  
+    最短路径查询：<br>
+    match path = shortestPath( (p1:"人物"{name:"特朗普"})->[r*1..4]->(p2) <br>
+    where p2.name="拿破仑"<br>
+    return path,length(path)<br>
 
 
 
