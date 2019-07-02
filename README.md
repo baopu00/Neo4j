@@ -18,7 +18,7 @@
 * 1.4 创建完整路径<br>
     create (n1:"人物"{name:"特朗普"})-[r:"弱相关"{name:"父女"]-(n2:"人物"{name:"伊万卡"}) <br>
     return n1,n2,r<br>
-<br>
+
 
 
 2.删
@@ -54,7 +54,7 @@
     match (n) where id(n)=128 set n.age = "12" return n<br>
     设置多个属性：<br>
     match (n) where id(n)=128 set n.age = "12"，n."职位" = "学生" return n<br>
-    <br>
+
 4.查
 
 * 4.1 查节点：<br>
@@ -70,12 +70,12 @@
     match (p1:"人物"{ name:"特朗普})-[r]->(p2) return r,type(r)<br>
     <br>
  
-*4.2 集合函数查询
+* 4.2 集合函数查询<br>
 
 通过id函数，返回节点或关系的ID<br>
 MATCH (:Person { name: 'Oliver Stone' })-[r]->(movie)<br>
 RETURN id(r);<br>
-<br>
+
 通过type函数，查询关系的类型<br>
 MATCH (:Person { name: 'Oliver Stone' })-[r]->(movie)<br>
 RETURN type(r);<br>
@@ -95,11 +95,11 @@ RETURN properties(p)<br>
 
 nodes(path)：返回path中节点<br>
 match p=(a)-->(b)-->(c) where a.name='Alice' and c.name='Eskil' return nodes(p)<br>
-<br>
+
 relationships(path)：返回path中的关系<br>
 match p=(a)-->(b)-->(c) where a.name='Alice' and c.name='Eskil' return relationships(p)<br>
 
-* 4.3 路径查询：
+* 4.3 路径查询：<br>
 常规路径查询：<br>
 match (:"人物"{name:"特朗普"})->(p) return p<br>
 
