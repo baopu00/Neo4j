@@ -47,7 +47,7 @@
 * 2.3 重设为NULL——set<br>
     删除属性：            match(n{name:"特朗普"}) set n."职位"=NULL return n<br>
     
-3.改
+3.改<br>
     改额外标签：<br>
     match (n) where id(n)=127 set n:"Person" return n<br>
     改额外属性： <br>
@@ -55,10 +55,10 @@
     设置多个属性：<br>
     match (n) where id(n)=128 set n.age = "12"，n."职位" = "学生" return n<br>
 
-4.查
-
-* 4.1 查节点：<br>
-   match(n:"人物"{name:"特朗普")  return n<br>
+4.查<br>
+* 4.1 查节点和关系<br>
+    查节点：<br>
+    match(n:"人物"{name:"特朗普")  return n<br>
                          或者 match(n:"人物") where n.name = "特朗普" return n<br>
     限制显示条数：<br>
     match(n:"人物") return n limit 20<br>
@@ -68,8 +68,7 @@
     match(n1{name:"特朗普"})-[r:"强相关"]-(n2) return r<br>
     查询关系属性和类型：<br>
     match (p1:"人物"{ name:"特朗普})-[r]->(p2) return r,type(r)<br>
-    <br>
- 
+
 * 4.2 集合函数查询<br>
 
     通过id函数，返回节点或关系的ID<br>
