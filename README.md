@@ -112,6 +112,3 @@
     return path,length(path)<br>
 
 
-
-
-python调用：
