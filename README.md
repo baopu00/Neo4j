@@ -111,7 +111,10 @@
     where p2.name="拿破仑"<br>
     return path,length(path)<br>
 
-
+补充：
+添加删除label
+match (n) where id(n)=27 set n:核电站 return n
+match (n) where id(n)=27 remove n:核电站 return n
 参考：
 https://blog.csdn.net/sinat_26917383/article/details/79883503
 https://blog.csdn.net/qq_40036754/article/details/88605030
