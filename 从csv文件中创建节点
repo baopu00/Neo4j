@@ -10,15 +10,11 @@ def neo4j_connection():
     建立neo4j图
     :return:neo4j 图
     '''
-    # NEO4J_IP = '192.168.0.109'
-    # NEO4J_PROT = '7474/browser/'
-    # NEO4J_USERNAME = 'neo4j'
-    # NEO4J_PASSWORD = 'shexingneo4j'
 
-    NEO4J_IP = '139.196.82.221'
+    NEO4J_IP = 
     NEO4J_PROT = '7474/browser/'
     NEO4J_USERNAME = 'neo4j'
-    NEO4J_PASSWORD = 'Root001.'
+    NEO4J_PASSWORD = 
 
     graph = Graph('http://' + NEO4J_IP + ':' + NEO4J_PROT, username=NEO4J_USERNAME, password=NEO4J_PASSWORD)
     return graph
