@@ -1,0 +1,9 @@
+df1 = pd.read_csv('/Users/juniorfellow/Desktop/data_feiji.csv',encoding='gb2312') 
+df2 = pd.read_csv('/Users/juniorfellow/Desktop/data_daodan.csv',encoding='gb2312') 
+for i in range(len(df1['武器装备'].tolist())):
+    if df1['武器装备'].tolist()[i].strip():
+        print(df1['武器装备'].tolist()[i])
+        print(df1['名称'].tolist()[i])
+        for j in df2['名称'].tolist():
+            if j in df1['武器装备'].tolist()[i].strip():
+                print('搭载')
