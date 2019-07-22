@@ -1,0 +1,76 @@
+# -*- coding: UTF-8 -*-
+from py2neo import Graph,Node,Relationship,cypher,NodeMatcher,Subgraph,RelationshipMatcher
+from gensim import corpora, similarities, models
+import pandas as pd
+import json
+import re
+
+def neo4j_connection():
+    '''
+    建立neo4j图
+    :return:neo4j 图
+    '''
+    # NEO4J_IP = '192.168.0.109'
+    # NEO4J_PROT = '7474/browser/'
+    # NEO4J_USERNAME = 'neo4j'
+    # NEO4J_PASSWORD = 'shexingneo4j'
+
+    NEO4J_IP = '139.196.82.221'
+    NEO4J_PROT = '7474/browser/'
+    NEO4J_USERNAME = 'neo4j'
+    NEO4J_PASSWORD = 'Root001.'
+
+    graph = Graph('http://' + NEO4J_IP + ':' + NEO4J_PROT, username=NEO4J_USERNAME, password=NEO4J_PASSWORD)
+    return graph
+    
+    def get_example_and_attrs(df1,attrs_need):
+    """
+    df1: 数据表格
+    attrs_need: 需求字段类标 ['名称', '弹长', '弹重', '最大速度', '最大射程', '所属地区']
+    """
+    example_and_attrs = []
+    df1.loc[0]
+    # for index in range(len(df1)):
+    for index in range(99,101):
+        Dict = {}
+        Dict_need = {}
+#         print(df1.loc[index])
+        Dict = df1.loc[index].where((pd.notnull(df1.loc[index])), None)
+        
+#         Dict = df1.loc[index].dropna(axis=0,how='all').to_dict()
+#         inter_set = list(set(Dict.keys())&set(attrs_need))
+        for key in attrs_need: # 获取need字段，放入Dict2中
+            Dict_need[key] = Dict[key]
+        example_and_attrs.append(Dict_need)
+
+    return example_and_attrs
+        
+
+def create_node(graph, example_and_attrs,label,attrs_need ):
+    '''
+    建立军事实体的node,军事实体的label 和对应关系举例：战斗机 歼20战机；航空母舰：辽宁号；。。。
+    :param graph:neo4j图
+    :param names:实体
+    :param label:实体标签名
+    example_and_attrs:
+    attrs_need
+    :return:
+    '''
+    for example in example_and_attrs:
+
+        name_node = Node(label,**example)
+        selector = NodeMatcher(graph)
+        if list(selector.match(label, 名称=example['名称'])) ==[] :  #查询是否实体节点存在
+            graph.create(name_node)
+            print(11111111)
+    return graph
+
+
+df1 = pd.read_csv('/Users/juniorfellow/Desktop/daodan_all.csv',encoding='utf8') 
+graph = neo4j_connection()
+label = '导弹'
+attrs_need = attrs_need = ['名称', '弹长', '弹重', '最大速度', '最大射程', '所属地区']
+
+example_and_attrs = get_example_and_attrs(df1,attrs_need)
+create_node(graph,example_and_attrs,label,attrs_need)
+print("完成新添加的实体节点构建（去重）")
