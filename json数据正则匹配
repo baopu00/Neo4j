@@ -1,0 +1,58 @@
+import re
+import pandas as pd
+def zhengze(line,rr):
+    if rr.findall(line):
+        return rr.findall(line)[0].split('：')[1]
+    else:
+        return ' '
+def zhengze2(line,rr):
+    if rr.findall(line):
+        return rr.findall(line)[0]
+    else:
+        return ' '   
+    
+def convert_pd(attrs,input_path,output_path):
+    """
+    attrs:匹配字段，如果出现相同字段可在指定位置适当修改
+    input_path:输入json路径
+    output_path:输出csv路径
+    """
+
+    rr = [re.compile(r'\S*%s\S*'% attr) for attr in attrs]
+    attrs_add = ['（1）','（2）','（3）','（4）']
+    rr_add1 =re.compile(r'\S*（1）\S*') 
+    rr_add2 =re.compile(r'\S*（2）\S*') 
+    rr_add3 =re.compile(r'\S*（3）\S*') 
+    rr_add4 =re.compile(r'\S*（4）\S*') 
+
+    df01 = pd.DataFrame()
+
+    with open(input_path,'r',encoding='utf8') as f1:
+        text = f1.readlines()
+
+    for i in range(len(rr)):
+        List = []
+        for line in text:
+            line = line.replace('\\n',' ')
+            line = line.replace('"',' ')
+            line = line.replace('射程：','射程1：',1)  #此处修改相同字段1名
+            line = line.replace('射程：','射程2：',1)  #此处修改相同字段2名
+            
+
+            if attrs[i]=='武器装备：':
+                List.append(zhengze2(line,rr_add1)+zhengze2(line,rr_add2)+
+                            zhengze2(line,rr_add3)+zhengze2(line,rr_add4))
+            else:
+                # print(zhengze(line,rr[i]))
+                List.append(zhengze(line,rr[i]))
+        df01[attrs[i].strip('：')] = List
+        df01.to_csv(output_path,index = None,encoding='gb2312') 
+    return 'finish'
+if __name__ == '__main__':
+    
+    # attrs = ['名称：','机长：','翼展：','机高：','空重：','最大飞行速度：','最大航程：',
+    #         '空重：','研发单位：','武器装备：']
+    attrs = ['名称：','弹长：','弹重：','射程1：','最大速度','研发单位：','射程2：']
+    input_path = '/Users/juniorfellow/Desktop/daodan_all.json'
+    output_path = '/Users/juniorfellow/Desktop/data.csv'
+    print(convert_pd(attrs,input_path,output_path))
